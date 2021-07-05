@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './feed.css';
-import Axios from 'axios';
+// import Axios from 'axios';
 
 
 
@@ -13,23 +13,23 @@ const[commentList, setCommentList] = useState([]);
 
 
 
-// post method 
-const submitComment = () => {
-    Axios.post("http://localhost:3000/api/users/comment", 
-    {comment: comment}).then(()=>{
-      alert("successful inesrt");
-    });
-  };
+//post method 
+// const submitComment = () => {
+//     Axios.post("http://localhost:3000/api/users/comment", 
+//     {comment: comment}).then(()=>{
+//       alert("successful inesrt");
+//     });
+//   };
   
   
   
-  //get method
-  useEffect(()=>{
-    Axios.get("http://localhost:3000/api/users/comment").then((response)=>{
-      // console.log(response.data);
-      setCommentList(response.data)
-    });
-  });
+//   //get method
+//   useEffect(()=>{
+//     Axios.get("http://localhost:3000/api/users/comment").then((response)=>{
+//       // console.log(response.data);
+//       setCommentList(response.data)
+//     });
+//   });
   
 
 
@@ -48,7 +48,7 @@ const submitComment = () => {
              onChange={(e)=>{
              setComment(e.target.value);
             }}/> 
-            <button onClick={submitComment}>Post</button>
+            {/* <button onClick={submitComment}>Post</button>
 
         {commentList.map((val)=> {
         return(
@@ -58,7 +58,7 @@ const submitComment = () => {
         );
       }
 
-      )}
+      )} */}
 
 
 

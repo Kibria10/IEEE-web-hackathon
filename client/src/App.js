@@ -16,16 +16,17 @@ class App extends React.Component{
     return(
       <div>
         <Switch>
-          {/* {
+          {
             !isLog ?
             <Route exact path='/' render={() => <Login isLogin={this.handleLogin}/>}/>
               :
             <Route path='/' render={() =><Home handleLogged={this.handleLogin}/> }/>
-          } */}
+          }
 
-          <Route exact path='/' component={Home}/>
           <Route path='*' component={NoMatch}/>
           {/* <Route exact path='/' component={CreatePost}/> */}
+          {/* <Route exact path='/' component={Home}/> */}
+
 
 
         </Switch>

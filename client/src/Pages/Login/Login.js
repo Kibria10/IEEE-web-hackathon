@@ -1,147 +1,125 @@
-import React, { useState } from "react";
-import "./login.css";
-import Axios from "axios";
+import React from 'react';
+import {ReactComponent as Logo} from '../../assets/earth.svg'
+import './login.css';
+import { BrowserRouter, Route }  from 'react-router-dom';
+import RegisterForm from './RegisterForm';
+import { LinkContainer } from 'react-router-bootstrap';
 
-import { useHistory } from "react-router-dom";
+class Login extends React.Component{
+    state={
+        email:'',
+        password:''
+    }
 
-function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+    handleChange = (e) =>{
+        const {name,value} = e.target
+        this.setState({[name]:value})
+    }
 
-  const [errorMessage, setErrorMessage] = useState("");
+    handleSubmit = (e) =>{
+        e.preventDefault()
+        this.props.isLogin(true)
+    }
+    render(){
+        return(
+            <div className='form'>
+                <div className='div-login-logo'>
+                    <Logo/>
+                </div>
+                <div>
+                    <form onSubmit = {this.handleSubmit}>
+                        <input type='email' name='email' placeholder='email...' required onChange={this.handleChange}/>
+                        <input type='password' name='password' placeholder='password...' required onChange={this.handleChange}/>
+                        <button onSubmit={this.handleSubmit}>Log In</button>
+                    </form>
+                </div>
+                <center class="message">  
+                    <BrowserRouter>
+                        <LinkContainer to="/signup">
+                            <a href className="nav-btn" variant="outline-primary"> Sign Up </a>
+                        </LinkContainer>
+                                <Route path="/signup" exact component={RegisterForm} />
+                      </BrowserRouter>
+                 </center>
+            </div>
 
-  let history = useHistory();
-
-  const login = () => {
-    Axios.post("http://localhost:3000/user/login", {
-      email: email,
-      password: password,
-    }).then((response) => {
-      if (response.data.loggedIn) {
-        localStorage.setItem("loggedIn", true);
-        localStorage.setItem("email", response.data.email);
-        history.push("/");
-      } else {
-        setErrorMessage(response.data.message);
-      }
-    });
-  };
-
-  return (
-    <div className="Login">
-      <h1>Login</h1>
-      <div className="form">
-        <input
-          type="text"
-          placeholder="Username..."
-          onChange={(event) => {
-            setEmail(event.target.value);
-          }}
-        />
-        <input
-          type="password"
-          placeholder="Password..."
-          onChange={(event) => {
-            setPassword(event.target.value);
-          }}
-        />
-        <button onClick={login}>Login</button>
-        <h1 style={{ color: "red" }}>{errorMessage} </h1>
-      </div>
-    </div>
-  );
+        )
+    }
 }
 
 export default Login;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react';
-// import axios from 'axios';
-// import { setUserSession } from './Utils/Common';
-// import './login.css'
+// import React,  { useState, useHistory} from 'react';
+// import Axios from 'axios'
+// import RegisterForm from './RegisterForm';
+// import { LinkContainer } from 'react-router-bootstrap';
+// import { BrowserRouter, Route }  from 'react-router-dom';
+// import './login.css';
 // import {ReactComponent as Logo} from '../../assets/earth.svg'
-// // import {Switch,Route} from 'react-router-dom'
-// // import NewHome from './Pages/NewHome/NewHome';
+
+// const Login= () => {
+// const[email, setEmail] = useState("");
+// const[password, setPassword] = useState("");
+// const[loginStaus, setLoginStatus]= useState();
+
+// //post method 
+// const submitReview = () => {
+//   Axios.post("http://localhost:3000/api/users/login", 
+//     {
+//   email: email,
+//   password: password}).then(res=>{
+//     console.log(res)
+//     if (!res.data.auth){
+//       setLoginStatus(false);
+//     }
+//     else{
+//       setLoginStatus(true);
+//     }
+//     localStorage.setItem('token', res.token);
+//   })
+//   .catch(err=>{
+//     console.log(err)
+//   })
 
 
-// function Login(props) {
-//   const [loading, setLoading] = useState(false);
-//   const email = useFormInput('');
-//   const password = useFormInput('');
-//   const [error, setError] = useState(null);
-
-//   // handle button click of login form
-//   let handleSubmit = (event) => {
-//     setError(null);
-//     setLoading(true);
-//     axios.post('http://localhost:3000/api/users/login', { email: email.value, password: password.value }).then(response => {
-//       setLoading(false);
-//       setUserSession(response.data.token, response.data.user);
-//       props.history.push('/dashboard');
-//       event.preventDefault()
-//       this.props.isLogin(true)
-
-//     }).catch(error => {
-//       setLoading(false);
-//       // if (error.response. === 401) setError(error.response.data.message);
-//       setError("Something went wrong. Please try again later.");
-//     });
-//   }
+//     return(
+//      <div class="login-box">
 
 
-
-
-//   return (
-//     <div className="login-box">
-//       <div class="form">
-//         <div className='div-login-logo'>
-//             <Logo/>
+//         <div class="form">
+//             <div className='div-login-logo'>
+//              <Logo/>
 //          </div>
-        
-//         <input type="text" {...email} placeholder= "Email" autoComplete="new-password" />
-      
-      
-//         <input type="text" {...password} placeholder= "Password" autoComplete="new-password" />
-      
-//       {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
-//       <input type="button" value={loading ? 'Loading...' : 'Login'} onClick={handleSubmit} disabled={loading} /><br />
+//       <input type = 'email' placeholder= "Email" autoComplete= "off" name = "email"
+//       onChange={(e)=>{
+//         setEmail(e.target.value);
+//       }}
+//       />
+
+//       <input type = 'password' placeholder= "Password" autoComplete= "off" name = "password"
+//       onChange={(e)=>{
+//         setPassword(e.target.value);
+//       }}
+//       />
+//     <button onClick={submitReview}>Sign In</button>
+
+//     <center class="message">  
+//     <BrowserRouter>
+//       <LinkContainer to="/signup">
+//        <a href className="nav-btn" variant="outline-primary"> Sign Up </a>
+//       </LinkContainer>
+//       <Route path="/signup" exact component={RegisterForm} />
+//     </BrowserRouter>
+//     </center>
+    
 //     </div>
-//     </div>
-//   );
+//     {loginStaus && <button>Authorized</button>}
+
+
+//     </div>    
+//     )
 // }
-
-// const useFormInput = initialValue => {
-//   const [value, setValue] = useState(initialValue);
-
-//   const handleChange = e => {
-//     setValue(e.target.value);
-//   }
-//   return {
-//     value,
-//     onChange: handleChange
-//   }
 // }
-
-// export default Login;
+// export default Login
