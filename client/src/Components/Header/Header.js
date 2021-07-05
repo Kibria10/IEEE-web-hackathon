@@ -5,11 +5,6 @@ import {ReactComponent as Home} from '../../assets/home.svg';
 import {ReactComponent as Explore} from '../../assets/user.svg';
 import './header.css';
 
-
-
-
-
-
 const Header = ({history,isLogged}) =>{
     const handleClick=() =>{
         history.push('/')
