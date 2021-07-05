@@ -5,7 +5,9 @@ const{ create,
   deleteUser,
   getUserByUserEmail,
   feed,
-  getFeed
+  getFeed,
+  comment,
+  getComment
 } = require("./user.service");
 
 
@@ -179,6 +181,46 @@ data:results
       });
     },
 
+
+
+    
+comment: (req, res) => {
+  const body = req.body;
+  // const salt = genSaltSync(10);
+  // body.password = hashSync(body.password, salt);
+  comment(body,(err,results)=>{
+      if(err){
+          console.log(err);
+          return res.start(500).json({
+success: 0,
+message: "Database connection error"
+          });
+      }
+
+return res.status(200).json({
+success:1,
+data:results
+});
+  });
+},
+
+getComment: (req, res) => {
+  const id = req.params.id;
+  getComment(id, (err, results) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    if (!results) {
+      return res.json({
+        success: 0,
+        message: "Record not Found"
+      });
+    }
+    results.password = undefined;
+    return res.json(results);
+  });
+},
 
 
     };

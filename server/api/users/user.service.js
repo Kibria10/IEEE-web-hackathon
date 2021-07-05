@@ -40,7 +40,7 @@ module.exports = {
 
     getUserByUserId: (id, callBack) => {
         pool.query(
-          `select id,firstName,lastName,gender,email,number from registration where id = ?`,
+          `select user_id,firstName,lastName,gender,email,number from registration where user_id = ?`,
           [id],
           (error, results, fields) => {
             if (error) {
@@ -54,7 +54,7 @@ module.exports = {
 
       getUser: callBack => {
         pool.query(
-          `select id,firstName,lastName,gender,email,number from registration`,
+          `select user_id,firstName,lastName,gender,email,number from registration`,
           [],
           (error, results, fields) => {
             if (error) {
@@ -69,7 +69,7 @@ module.exports = {
 
       updateUser: (data, callBack) => {
         pool.query(
-          `update registration set firstName=?, lastName=?, gender=?, email=?, password=?, number=? where id = ?`,
+          `update registration set firstName=?, lastName=?, gender=?, email=?, password=?, number=? where user_id = ?`,
           [
             data.first_name,
             data.last_name,
@@ -90,7 +90,7 @@ module.exports = {
     //delete
     deleteUser: (data, callBack) => {
         pool.query(
-          `delete from registration where id = ?`,
+          `delete from registration where user_id = ?`,
           [data.id],
           (error, results, fields) => {
             if (error) {
@@ -138,4 +138,37 @@ module.exports = {
     );
   },
 
-    };
+
+  
+  comment: (data, callBack) => {
+    pool.query(
+        
+        `INSERT INTO comments(name, text, post_id) VALUES(?,?,?)`,
+
+        [
+            data.comment
+        ],
+        (error, results, fields) => {
+            if(error) {
+                return callBack(error);
+            }
+        return callBack(null, results);
+        }
+    );
+},
+
+
+getComment: (id, callBack) => {
+  pool.query(
+    `SELECT name, text FROM comments WHERE comments.post_id IN (SELECT feed.post_id FROM feed WHERE post_id=?)`,
+    [id],
+    (error, results, fields) => {
+      if (error) {
+        callBack(error);
+      }
+      return callBack(null, results[0]);
+    }
+  );
+},
+
+};
